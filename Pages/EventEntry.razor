@@ -1,0 +1,78 @@
+@using EventRegistrationApp.Data
+ 
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Create or Edit Event</h5>
+        </div>
+        <div class="card-body">
+            <EditForm Model="EventModel" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <InputText class="form-control" @bind-Value="EventModel.Name" />
+                    </div>
+                </div>
+
+                @* <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Date</label>
+                    <div class="col-sm-10">
+                        <InputDate class="form-control" @bind-Value="EventModel.Date" />
+                    </div>
+                </div> *@
+
+                <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-10">
+                           <InputDate @bind-Value="EventModel.Date" @attributes="dateAttributes" />
+                                <div class="form-text text-muted"> 
+                                    Please select a date between @MinDate and @MaxDate 
+                                </div>
+                        </div>
+                    </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Location</label>
+                    <div class="col-sm-10">
+                        <InputText class="form-control" @bind-Value="EventModel.Location" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <InputTextArea class="form-control" @bind-Value="EventModel.Description" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Save Event</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public Event EventModel { get; set; } = new();
+    [Parameter] public EventCallback<Event> EventModelChanged { get; set; }
+    private DateTime MinDate => DateTime.Today;            // Tomorrow
+    private DateTime MaxDate => DateTime.Today.AddDays(30);       // 30 days from today
+    private async Task HandleSubmit()
+    {
+        await EventModelChanged.InvokeAsync(EventModel);
+    }
+
+    private Dictionary<string, object> dateAttributes => new()
+    {
+        ["min"] = MinDate.ToString("yyyy-MM-dd"),
+        ["max"] = MaxDate.ToString("yyyy-MM-dd"),
+        ["class"] = "form-control"
+    };
+}
+

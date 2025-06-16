@@ -1,0 +1,75 @@
+@page "/"
+@using EventRegistrationApp.Data
+@using EventRegistrationApp.Services
+@inject EventService EventService
+@inject IJSRuntime JSRuntime
+
+
+<h3>Event Registration App (With Persistence)</h3>
+ 
+
+<ConfirmModal @ref="confirmModal" Title="Clear Event" Message="Are you sure you want to clear all event data?" OnConfirmed="HandleClearConfirmation" />
+
+<button class="btn btn-danger" @onclick="() => confirmModal.Show()">Clear Event Data</button>
+@if (loaded)
+{
+    @* <EventEntry EventModel="EventService.CurrentEvent" EventModelChanged="HandleEventUpdated" /> *@
+    if (EventService.CurrentEvent is not null)
+    {
+        <EventEntry EventModel="EventService.CurrentEvent" EventModelChanged="HandleEventUpdated" />
+    }
+
+    <hr />
+
+    <RegistrationEntry EventModel="EventService.CurrentEvent" EventChanged="HandleEventUpdated" />
+
+    <hr />
+
+    <EventDetails EventModel="EventService.CurrentEvent" />
+}
+else
+{
+    <p>Loading event data...</p>
+}
+
+
+
+
+@code {
+    private bool loaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await EventService.LoadEventAsync();
+        loaded = true;
+    }
+
+    private async Task HandleEventUpdated(Event updatedEvent)
+    {
+        await EventService.SaveEventAsync(updatedEvent);
+    }
+ 
+private async Task ClearEvent()
+{
+    bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to clear the saved event data?");
+    if (confirmed)
+    {
+        await EventService.ClearEventAsync();
+        StateHasChanged();
+    }
+}
+
+@code {
+    private ConfirmModal? confirmModal;
+
+    private async Task HandleClearConfirmation(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await EventService.ClearEventAsync();
+            StateHasChanged();
+        }
+    }
+}
+
+}
