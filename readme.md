@@ -4,7 +4,6 @@ GitHub Actions workflow for continuous integration and deployment (CI/CD)
 ---
 ![Build Status](https://github.com/ftedeus/EventRegistrationApp/actions/workflows/deploy.yml/badge.svg)
 ![Deployment](https://img.shields.io/github/deployments/ftedeus/EventRegistrationApp/Production?label=deployed)
-![License](https://img.shields.io/github/license/ftedeus/EventRegistrationApp)
 ![Last Commit](https://img.shields.io/github/last-commit/ftedeus/EventRegistrationApp)
 ![Issues](https://img.shields.io/github/issues/ftedeus/EventRegistrationApp)
 ![Pull Requests](https://img.shields.io/github/issues-pr/ftedeus/EventRegistrationApp)
