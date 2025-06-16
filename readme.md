@@ -3,8 +3,10 @@ A modern **Blazor WebAssembly** application for managing event registrations, au
 GitHub Actions workflow for continuous integration and deployment (CI/CD)  
 ---
 ![Build Status](https://github.com/ftedeus/EventRegistrationApp/actions/workflows/deploy.yml/badge.svg)
+![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet?logo=dotnet)
 ![Deployment](https://img.shields.io/github/deployments/ftedeus/EventRegistrationApp/Production?label=deployed)
 ![Last Commit](https://img.shields.io/github/last-commit/ftedeus/EventRegistrationApp)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Issues](https://img.shields.io/github/issues/ftedeus/EventRegistrationApp)
 ![Pull Requests](https://img.shields.io/github/issues-pr/ftedeus/EventRegistrationApp)
 
